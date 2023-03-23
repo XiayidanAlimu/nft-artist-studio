@@ -4,12 +4,16 @@ export  type  Nft = {
     tokenUri: string,
     name:string,
     descriptipn:string,
-    imageUri:string
+    imageUri:string,
+    uri: string,
+    type: string
 }
 export  type  NftMeta = {
     name:string,
     descriptipn:string,
-    imageUri:string
+    imageUri:string,
+    uri: string,
+    type: string
 }
 
 

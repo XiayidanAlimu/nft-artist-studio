@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react"
 import { Table} from 'antd'
-
+import { readArticle } from "../../service/ipfs-service";
+import { useNavigate } from "react-router-dom"
+import { ownedTypedNFT } from "../../service/nft-service";
 function ArticleList() {
-    const [articles, setArticles] = useState<any[]>([])
+    const [articles, setArticles] = useState([])
+    const navigate = useNavigate()
     const columns = [
-        {
-            title: '序号',
-            dataIndex: 'index',
-            width: 80,
-        },
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            width: 100,
-            ellipsis: true
-        },
+ 
         {
             title: '标题',
-            dataIndex: 'title',
+            dataIndex: 'name',
             width: 500,
-            render: (text: string) => <a href="javascript: void(0)" target="_self" >{text}</a>
+            render: (text) => <a href="javascript: void(0)" target="_self" >{text}</a>
         },
+
         {
-            title: '内容',
-            dataIndex: 'content'
+            title: '阅读',
+            dataIndex: 'entity',
+            width: 500,
+            render: (entity) => <a href="javascript: void(0)" target="_self" onClick={e =>view(entity,e)}>阅读</a>
         },
     ]
     useEffect(() => {
@@ -33,11 +29,16 @@ function ArticleList() {
 
     const loadArticles = async () => {
         debugger
-        
-        setArticles([])
+        let {success, data} = await ownedTypedNFT("article");
+        let rdata = data.map((e, i)=>({index:i, entity:e, ...e}))
+        setArticles(rdata)
         console.log("mounted!")
     }
-
+    const view = async (entity, event)=>{
+        debugger
+        let content = await readArticle(entity.uri)
+        navigate("/personal/article-read", { state: { title:entity.name,content}})
+    }
     return (
 
         <div>

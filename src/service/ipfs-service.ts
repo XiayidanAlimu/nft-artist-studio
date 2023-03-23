@@ -26,3 +26,8 @@ export const addToIpfs = async (entity:any) : Promise<string> => {
     const rst = IPFS.url_prefix + cid;
     return rst;
   }
+
+export const readArticle = async (uri:string): Promise<string> => {
+    const res = await axios.get(uri);
+    return res.data
+}

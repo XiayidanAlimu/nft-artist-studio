@@ -17,7 +17,7 @@ const props = {
 function NftMintor() {
 
     const navigate = useNavigate()
-    const [meta, updateMeta] = useState<NftMeta>({ name: "", descriptipn: "", imageUri: "" })
+    const [meta, updateMeta] = useState<NftMeta>({ name: "", descriptipn: "", imageUri: "",uri:"",type:"" })
     const [uri, setUri] = useState("")
     const store = async (file: any) => {
         try {
@@ -34,7 +34,7 @@ function NftMintor() {
     const mint = async () => {
         try {
             debugger
-            const data: NftMeta = { ...meta, imageUri: uri }
+            const data: NftMeta = { ...meta, imageUri: uri,type:"image" }
             const json = JSON.stringify(data);
             const metauri = await addToIpfs(json)
             messageBox("success", "", metauri)
