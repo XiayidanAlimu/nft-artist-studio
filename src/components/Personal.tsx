@@ -7,7 +7,9 @@ import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 import NftMintor from './personal-comp/NftMintor';
 import MyNft from './personal-comp/MyNft';
-
+import ArticleEditor from './personal-comp/ArticleEditor';
+import ArticleList from './personal-comp/ArticleList';
+import ArticleScratch from './personal-comp/ArticleScratch';
 
 const { Header, Content, Sider } = Layout;
 
@@ -108,7 +110,9 @@ export default function Personal() {
                 >
 
                     <Routes>
-
+                    <Route path="article-write" element={<ArticleEditor />} />
+                        <Route path="article-scratch" element={<ArticleScratch />} />
+                        <Route path="article-browse" element={<ArticleList />} />
                         <Route path="collectible-mint" element={<NftMintor />} />
                         <Route path="collectible-browse" element={<MyNft />} />
                     </Routes>
