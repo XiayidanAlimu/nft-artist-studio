@@ -55,12 +55,7 @@ editorCssClass: false,
     setContent(location.state?.content)
 
   }, []);
-  async function publishPost() {
-    
-    alert(content)
- 
 
-}
 async function savePost() {
     debugger
   saveArticle(title, content)
