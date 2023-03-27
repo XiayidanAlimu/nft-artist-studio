@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import JoditEditor from 'jodit-react';
 import { Layout, theme, Button, Space, Input, Divider } from 'antd';
 import { saveArticle } from '../../../service/storage-service';
+
 import { useLocation } from 'react-router-dom';
-import { addToIpfs } from '../../../service/ipfs-service';
+import { storeArticle, storeMeta } from '../../../service/arweave-service';
 import { mintNFT } from '../../../service/nft-service';
 import { messageBox } from '../../../service/message-service';
 
@@ -72,11 +73,11 @@ const Example = () => {
 
   }
   const mintArticle = async () => {
-    let uri = await addToIpfs(content);
+    let uri = await storeArticle(content);//addToIpfs(content);
     messageBox("success", "", uri)
     let meta = { name: title, description: title, type: "article", uri }
     let entity = JSON.stringify(meta)
-    let tokenURI = await addToIpfs(entity);
+    let tokenURI = await storeMeta(entity);//addToIpfs(entity);
     messageBox("success", "", tokenURI)
     let {success, tokenId} = await mintNFT(tokenURI)
     if (success) {
