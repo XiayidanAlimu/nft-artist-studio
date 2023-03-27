@@ -1,8 +1,7 @@
 import { useState } from "react"
 
 import { Button, Checkbox, Form, Input } from 'antd';
-
-import { storeNftImage, storeMeta } from "../../service/arweave-service";
+import { addToIpfs } from "../../service/ipfs-service";
 import { mintNFT } from "../../service/nft-service";
 import { NftMeta } from "../../service/types";
 import { useNavigate } from "react-router-dom"
@@ -24,7 +23,7 @@ function NftMintor() {
         try {
 
 
-            const imageuri = await storeNftImage(file);//addToIpfs(file)
+            const imageuri = await addToIpfs(file)
             messageBox("success", "", imageuri)
             setUri(imageuri);
         } catch (error) {
@@ -37,7 +36,7 @@ function NftMintor() {
             debugger
             const data: NftMeta = { ...meta, imageUri: uri,type:"image" }
             const json = JSON.stringify(data);
-            const metauri = await storeMeta(json); //addToIpfs(json)
+            const metauri = await addToIpfs(json)
             messageBox("success", "", metauri)
             const { success, tokenId } = await mintNFT(metauri);
 
