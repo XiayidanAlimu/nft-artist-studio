@@ -21,7 +21,7 @@ type NetworkConfiguration = {
 }
  const confs: NetworkConfiguration[]=[ {
     
-    chainId: 0x7A69,
+    chainId: 0x7A69, // 13337 localhost 本地开发链的chainId
    
     nftAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
 

@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Button, Checkbox, Form, Input } from 'antd';
 
 import { storeNftImage, storeMeta } from "../../service/arweave-service";
+import { addToIpfs } from '../../service/ipfs-service';
 import { mintNFT } from "../../service/nft-service";
 import { NftMeta } from "../../service/types";
 import { useNavigate } from "react-router-dom"
@@ -18,15 +19,26 @@ const props = {
 function NftMintor() {
 
     const navigate = useNavigate()
-    const [meta, updateMeta] = useState<NftMeta>({ name: "", descriptipn: "", imageUri: "",uri:"",type:"" })
+    const [meta, updateMeta] = useState<NftMeta>({
+        name: "",
+        descriptipn: "",
+        imageUri: "",
+        uri:"",
+        type:""
+    })
     const [uri, setUri] = useState("")
+    /**
+     * store 函数负责将媒体文件存储到IPFS
+     */
     const store = async (file: any) => {
         try {
 
-
-            const imageuri = await storeNftImage(file);//addToIpfs(file)
+            // 1. 存储在IPFS的方式
+            const imageuri = await addToIpfs(file);
+            // 2. 存储在Arweave的方式
+            // const imageuri = await storeNftImage(file);
             messageBox("success", "", imageuri)
-            setUri(imageuri);
+            setUri(imageuri); // 设置组件的状态，用了useState hook
         } catch (error) {
             if (error instanceof Error)
                 messageBox("danger", "", error.message)
@@ -35,9 +47,17 @@ function NftMintor() {
     const mint = async () => {
         try {
             debugger
-            const data: NftMeta = { ...meta, imageUri: uri,type:"image" }
+            const data: NftMeta = {
+                ...meta,
+                imageUri: uri,
+                type: "image" // 图片是"image"，文章是"article"
+            }
             const json = JSON.stringify(data);
-            const metauri = await storeMeta(json); //addToIpfs(json)
+
+            // 1. 存储在IPFS的方式
+            const metauri = await addToIpfs(json);
+            // 2. 存储在Arweave的方式
+            // const metauri = await storeMeta(json);
             messageBox("success", "", metauri)
             const { success, tokenId } = await mintNFT(metauri);
 
@@ -77,7 +97,7 @@ function NftMintor() {
                     type='file'
                     placeholder="Asset Image"
                     className={styles.NftField}
-                    onChange={(e) => { e.target.files&&store(e.target.files[0]) }}
+                    onChange={(e) => { e.target.files && store(e.target.files[0]) }}
                 />
 
 

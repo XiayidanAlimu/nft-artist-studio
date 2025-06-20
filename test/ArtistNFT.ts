@@ -21,7 +21,7 @@ describe("ArtistNFT", function () {
   describe("Mint", function () {
     it("Should mint correctly", async function () {
       const { nft,owner, otherAccount } = await loadFixture(deployNftFixture);
-      const addr =await  owner.getAddress();
+      const addr = await owner.getAddress();
       await nft.mint(addr,"http://www.baidu.com");
       expect(await nft.tokenURI(0)).to.equal("http://www.baidu.com");
     });

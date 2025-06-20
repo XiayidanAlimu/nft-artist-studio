@@ -1,4 +1,9 @@
 //localStorage
+// 提供文档的增删改查
+// 控制成本
+// web3: 需要考虑收益和成本
+
+
 import { Axios } from "axios"; 
 export const getArticle = async (title) => {
     let aid = "article-" + title;

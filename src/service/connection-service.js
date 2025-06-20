@@ -25,8 +25,9 @@ import { configuration } from '../config'
     }
     export const connect = async () => {
         let {success} = await trying();
-        if(success)
+        if (success) {
             return;
+        }
         const conf = configuration()
         await window.ethereum.request({
             method: "wallet_addEthereumChain",

@@ -8,6 +8,7 @@ import Home from './Home';
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import Connect from './Connect';
 import ConnectIpfs from './ConnectIpfs';
+import ConnectArweave from './ConnectArweave';
 import styles from "./TopLayout.module.css"
 import Personal from './Personal';
 import NftMarket from './NftMarket';
@@ -50,6 +51,9 @@ export default function TopLayout() {
                     </Menu.Item>
                     <Menu.Item>
                         <ConnectIpfs />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <ConnectArweave />
                     </Menu.Item>
                 </Menu>
             </Header>

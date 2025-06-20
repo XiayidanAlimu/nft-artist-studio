@@ -29,15 +29,24 @@ function ArticleList() {
 
     const loadArticles = async () => {
         debugger
-        let {success, data} = await ownedTypedNFT("article");
-        let rdata = data.map((e, i)=>({index:i, entity:e, ...e}))
+        let {success, data} = await ownedTypedNFT("article"); // 按照元数据的类型返回NFT列表
+        let rdata = data.map((e, i)=>({
+            index:i,
+            entity:e,
+            ...e
+        })) // e是元素，i是元素的索引下标
         setArticles(rdata)
         console.log("mounted!")
     }
     const view = async (entity, event)=>{
         debugger
         let content = await readArticle(entity.uri)
-        navigate("/personal/article-read", { state: { title:entity.name,content}})
+        navigate("/personal/article-read", {
+            state: {
+                title:entity.name,
+                content
+            }
+        })
     }
     return (
 

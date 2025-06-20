@@ -9,9 +9,9 @@ const ipfs =  ipfsHttpClient({
   })
 
 export const addToIpfs = async (entity:any) : Promise<string> => {
-    debugger
-     const added = await ipfs.add(entity)
-    const cid = added.path
+    const added = await ipfs.add(entity)
+    const cid = added.path;
+    alert(cid);
     const rst = IPFS.url_prefix + cid;
     return rst;
   }
@@ -24,9 +24,18 @@ export const storeNftImage = async (file:any) => {
      return await addToIpfs(file);
 }
 
-export const storeMeta = async (meta:any) => {
+export const storeMeta = async (data:any) => {
 
-    return await addToIpfs(meta);
+  // 自动处理对象转换
+  const content = typeof data === 'object' 
+    ? JSON.stringify(data)
+    : data;
+  alert(content);
+  try {
+    return await addToIpfs(content);
+  } catch (error) {
+    alert(error)
+  }
 
 }
 

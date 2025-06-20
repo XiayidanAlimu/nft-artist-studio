@@ -7,6 +7,10 @@ import NFT from "../artifacts/contracts/ArtistNFT.sol/ArtistNFT.json";
 import type { Nft } from './types';
 import axios from 'axios'
 
+/**
+ * owned
+ * @returns 当前账户所拥有的全部NFT
+ */
 export const owned = async (): Promise<{ success: boolean, data: Nft[] }> => {
     const { success, provider, signer } = await trying();
     if (!success) {
@@ -35,6 +39,11 @@ export const owned = async (): Promise<{ success: boolean, data: Nft[] }> => {
     return { success: true, data: rst }
 
 }
+
+/**
+ * 
+ * @returns 当前合约的总发行量
+ */
 export const totalsupply = async (): Promise<number> => {
     const provider = new ethers.providers.JsonRpcProvider(rpcUrl());
 
@@ -43,6 +52,11 @@ export const totalsupply = async (): Promise<number> => {
     return total;
 }
 
+/**
+ * 
+ * @param tokenUri 
+ * @returns 
+ */
 export const mintNFT = async (tokenUri: String): Promise<{ success: boolean, tokenId?: number }> => {
     const { success, provider, signer } = await trying();
     if (!success || !signer) {
@@ -63,6 +77,8 @@ export const mintNFT = async (tokenUri: String): Promise<{ success: boolean, tok
     alert(tokenId)
     return { success: true, tokenId };
 }
+
+// 按照元数据的类型返回NFT列表
 export const ownedTypedNFT = async (type: string): Promise<{ success: boolean, data: Nft[] }> => {
     let { success, data } = await owned();
     if (!success)
