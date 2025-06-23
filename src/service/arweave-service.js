@@ -1,10 +1,12 @@
 import Arweave from "arweave";
 import { ARWEAVE } from "../config";
+
 const arweave = Arweave.init({
     host: ARWEAVE.domain,
     port: ARWEAVE.port,
     protocol: ARWEAVE.protocol
 });
+
 export const toArweave = async (entity, tags) => {
     let tx = await arweave.createTransaction({
         data: entity,
@@ -20,11 +22,13 @@ export const toArweave = async (entity, tags) => {
     alert(url)
     return url;
 }
+
 export const storeNftImage = async (file) => {
     const data = await readImageFile(file);
     const tags = { "Content-Type": "image/jpeg", "Domain-Type": "nft-image" };
     return await toArweave(data, tags);
 }
+
 const readImageFile = (file) => {
     const reader = new FileReader();
     return new Promise((resolve, reject) => {
@@ -37,6 +41,7 @@ const readImageFile = (file) => {
         reader.readAsArrayBuffer(file);
     })
 }
+
 export const storeMeta = async (meta) => {
     const tags = { "Content-Type": "text/json", "Domain-Type": "meta" };
     return await toArweave(meta, tags);

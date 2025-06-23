@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Button, Checkbox, Form, Input } from 'antd';
 
 import { storeNftImage, storeMeta } from "../../service/arweave-service";
-import { addToIpfs } from '../../service/ipfs-service';
+// import { addToIpfs } from '../../service/ipfs-service';
 import { mintNFT } from "../../service/nft-service";
 import { NftMeta } from "../../service/types";
 import { useNavigate } from "react-router-dom"
@@ -34,9 +34,9 @@ function NftMintor() {
         try {
 
             // 1. 存储在IPFS的方式
-            const imageuri = await addToIpfs(file);
+            // const imageuri = await addToIpfs(file);
             // 2. 存储在Arweave的方式
-            // const imageuri = await storeNftImage(file);
+            const imageuri = await storeNftImage(file);
             messageBox("success", "", imageuri)
             setUri(imageuri); // 设置组件的状态，用了useState hook
         } catch (error) {
@@ -55,9 +55,9 @@ function NftMintor() {
             const json = JSON.stringify(data);
 
             // 1. 存储在IPFS的方式
-            const metauri = await addToIpfs(json);
+            // const metauri = await addToIpfs(json);
             // 2. 存储在Arweave的方式
-            // const metauri = await storeMeta(json);
+            const metauri = await storeMeta(json);
             messageBox("success", "", metauri)
             const { success, tokenId } = await mintNFT(metauri);
 

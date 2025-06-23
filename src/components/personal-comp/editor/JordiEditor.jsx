@@ -76,45 +76,45 @@ const Example = () => {
   // /**
   //  * 铸币方法一：存储到IPFS
   //  */
-  const mintArticle = async () => {
-    let uri = await addToIpfs(content)
-    messageBox("success", "", uri)
-    let meta = {
-      name: title,
-      description: title,
-      type: 'article', // 文章是"article"
-      uri
-    }
-    let entity = JSON.stringify(meta)
-    let tokenURI = await addToIpfs(entity)
-    messageBox("success", "", tokenURI)
-    const { success, tokenId } = await mintNFT(tokenURI)
-    if (success && tokenId) {
-      messageBox("success", "", tokenId?.toString())
-      navigate("/personal/collectible-browse")
-      // router.push("/mynft")
-    } else {
-      messageBox("danger", "", "mint failed")
-    }
-  }
-
-  // /**
-  //  * 铸币方法二：存储到Arwear
-  //  */
   // const mintArticle = async () => {
-  //   let uri = await storeArticle(content);//addToIpfs(content);
+  //   let uri = await addToIpfs(content)
   //   messageBox("success", "", uri)
-  //   let meta = { name: title, description: title, type: "article", uri }
+  //   let meta = {
+  //     name: title,
+  //     description: title,
+  //     type: 'article', // 文章是"article"
+  //     uri
+  //   }
   //   let entity = JSON.stringify(meta)
-  //   let tokenURI = await storeMeta(entity);//addToIpfs(entity);
+  //   let tokenURI = await addToIpfs(entity)
   //   messageBox("success", "", tokenURI)
-  //   let {success, tokenId} = await mintNFT(tokenURI)
-  //   if (success) {
-  //     messageBox("success", "", tokenId)
+  //   const { success, tokenId } = await mintNFT(tokenURI)
+  //   if (success && tokenId) {
+  //     messageBox("success", "", tokenId?.toString())
+  //     navigate("/personal/collectible-browse")
+  //     // router.push("/mynft")
   //   } else {
   //     messageBox("danger", "", "mint failed")
   //   }
   // }
+
+  // /**
+  //  * 铸币方法二：存储到Arwear
+  //  */
+  const mintArticle = async () => {
+    let uri = await storeArticle(content);//addToIpfs(content);
+    messageBox("success", "", uri)
+    let meta = { name: title, description: title, type: "article", uri }
+    let entity = JSON.stringify(meta)
+    let tokenURI = await storeMeta(entity);//addToIpfs(entity);
+    messageBox("success", "", tokenURI)
+    let {success, tokenId} = await mintNFT(tokenURI)
+    if (success) {
+      messageBox("success", "", tokenId)
+    } else {
+      messageBox("danger", "", "mint failed")
+    }
+  }
 
   return (
     <Layout>
